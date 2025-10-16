@@ -6,152 +6,194 @@
   <title>AI Clasa a VI-a — Română și Matematică</title>
   <style>
     :root{
-      --bg:#f4f6f8;
-      --card:#ffffff;
-      --accent:#0b66ff;
-      --text:#162029;
-      --muted:#556270;
-      --radius:12px;
-      --gap:14px;
-      --maxw:900px;
+      --bg-grad: linear-gradient(135deg,#0f4c81 0%,#6a34a5 20%,#0ba678 40%,#f2c94c 60%,#e94e77 80%,#08a8b5 100%);
+      --glass: rgba(255,255,255,0.08);
+      --card: rgba(255,255,255,0.88);
+      --text: #072032;
+      --muted: #3f5766;
+      --radius:16px;
+      --shadow: 0 10px 30px rgba(6,18,38,0.18);
+      --maxw:980px;
     }
     html,body{
       height:100%;
       margin:0;
       font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:linear-gradient(180deg,var(--bg),#eef2f7);
+      background: var(--bg-grad);
       color:var(--text);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
     }
-    .wrap{
+
+    .container{
       max-width:var(--maxw);
-      margin:20px auto;
+      margin:28px auto;
       padding:18px;
     }
+
     header{
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:12px;
-      margin-bottom:12px;
+      color:white;
+      margin-bottom:14px;
     }
     header h1{
       margin:0;
       font-size:20px;
       line-height:1.05;
       letter-spacing:-0.2px;
+      text-shadow:0 2px 8px rgba(0,0,0,0.18);
     }
     header p{
       margin:0;
-      color:var(--muted);
+      opacity:0.95;
       font-size:13px;
     }
+
     .card{
-      background:var(--card);
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.80));
       border-radius:var(--radius);
-      padding:16px;
-      box-shadow:0 6px 18px rgba(15,23,42,0.06);
+      padding:18px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(6px) saturate(120%);
+      border: 1px solid rgba(255,255,255,0.4);
     }
-    .controls{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:12px;
+
+    label{
+      display:block;
+      font-weight:600;
+      margin-bottom:8px;
+      color:var(--text);
     }
+
     textarea#intrebare{
       width:100%;
-      min-height:110px;
-      resize:vertical;
-      padding:12px;
-      border-radius:10px;
-      border:1px solid rgba(15,23,42,0.06);
+      min-height:120px;
+      padding:14px;
+      border-radius:12px;
+      border:1px solid rgba(6,18,38,0.06);
       font-size:15px;
       box-sizing:border-box;
+      resize:vertical;
       outline:none;
     }
-    .row{
+
+    .controls{
       display:flex;
-      gap:8px;
-      align-items:center;
+      gap:10px;
       margin-top:12px;
       flex-wrap:wrap;
+      align-items:center;
     }
-    button{
-      background:var(--accent);
-      color:white;
-      border:none;
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
       padding:10px 14px;
-      border-radius:10px;
-      font-size:14px;
+      border-radius:12px;
+      border:none;
+      font-weight:600;
       cursor:pointer;
-      box-shadow:0 4px 10px rgba(11,102,255,0.12);
+      color:white;
+      box-shadow:0 6px 16px rgba(3,10,20,0.12);
+      user-select:none;
     }
-    button.secondary{
-      background:#eef3ff;
-      color:var(--accent);
+    .btn svg{width:18px;height:18px;opacity:0.98}
+
+    .btn-rasp { background: #0b66ff; }
+    .btn-voce { background: #07a87d; }
+    .btn-cit { background: #8b44ff; }
+    .btn-list { background: #f2a400; color:#08202a; box-shadow:none; }
+    .btn-clear{ background: #e64b4b; }
+    .btn-outline{
+      background:transparent;
+      color:var(--text);
+      border:1px solid rgba(6,18,38,0.06);
       box-shadow:none;
-      border:1px solid rgba(11,102,255,0.08);
     }
-    .small{
-      padding:8px 10px;
-      font-size:13px;
-      border-radius:8px;
-    }
+
     #raspuns{
       margin-top:16px;
-      padding:14px;
-      background:#fff;
-      border-radius:10px;
-      text-align:left;
-      line-height:1.45;
+      padding:18px;
+      background:var(--card);
+      border-radius:12px;
+      line-height:1.6;
       font-size:15px;
-      box-shadow:0 6px 14px rgba(15,23,42,0.04);
+      color:var(--text);
+      box-shadow:0 8px 22px rgba(6,18,38,0.06);
       white-space:pre-wrap;
+      max-height:58vh;
+      overflow:auto;
     }
+
     .signature{
       position:fixed;
       right:14px;
-      bottom:10px;
-      background:rgba(0,0,0,0.06);
-      padding:8px 10px;
+      bottom:12px;
+      background:rgba(255,255,255,0.18);
+      padding:8px 12px;
       border-radius:999px;
       font-size:13px;
-      color:var(--muted);
-      backdrop-filter:blur(4px);
+      color:#062229;
+      backdrop-filter: blur(6px);
+      border:1px solid rgba(255,255,255,0.24);
+      box-shadow:0 6px 18px rgba(3,10,20,0.12);
     }
+
     /* responsive */
-    @media (max-width:600px){
-      header{flex-direction:column;align-items:flex-start;gap:6px}
-      .row{flex-direction:column;align-items:stretch}
-      button{width:100%}
-      .controls{flex-direction:column}
-      :root{--maxw:95%}
+    @media (max-width:880px){
+      header{flex-direction:column;align-items:flex-start}
+      .controls{flex-direction:column;align-items:stretch}
+      .btn{width:100%;justify-content:center}
+      #raspuns{max-height:50vh}
+      :root{--maxw:94%}
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="container">
     <header>
       <div>
         <h1>AI Clasa a VI-a</h1>
-        <p>Română și Matematică, rezumate lungi, calcule rapide, voce și responsive</p>
+        <p>Română și Matematică, rezumate detaliate și calcule rapide</p>
       </div>
-      <div style="text-align:right">
-        <small style="color:var(--muted)">Proiect educațional</small>
+      <div style="text-align:right;color:rgba(255,255,255,0.95)">
+        <small>Proiect educațional</small>
       </div>
     </header>
 
-    <div class="card">
-      <label for="intrebare" style="font-weight:600">Scrie sau spune întrebarea</label>
+    <div class="card" role="main">
+      <label for="intrebare">Scrie sau spune întrebarea</label>
       <textarea id="intrebare" placeholder="Exemple: rezumat Harap Alb, rezumat Cenușăreasa, 8+9, 45:5, explică ecuații simple"></textarea>
 
-      <div class="controls">
-        <button onclick="genereazaRaspuns()" class="small">Răspunde</button>
-        <button onclick="vorbeste()" class="secondary small">🎤 Spune întrebarea</button>
-        <button onclick="citeste()" class="small">🔊 Citește răspunsul</button>
-        <button onclick="showLista()" class="secondary small">📚 Lista povestiri</button>
-        <button onclick="sterge()" class="secondary small">🧹 Curăță</button>
+      <div class="controls" style="margin-top:14px">
+        <button class="btn btn-rasp" onclick="genereazaRaspuns()" title="Răspunde">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Răspunde
+        </button>
+
+        <button class="btn btn-voce" onclick="vorbeste()" id="butonVoce" title="Spune întrebarea">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 1v11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5 8v3a7 7 0 0 0 14 0V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Spune
+        </button>
+
+        <button class="btn btn-cit" onclick="citeste()" title="Citește răspunsul">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 5h18M3 12h18M3 19h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Citește
+        </button>
+
+        <button class="btn btn-list" onclick="showLista()" title="Lista povestiri">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Lista
+        </button>
+
+        <button class="btn btn-clear" onclick="sterge()" title="Curăță">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 6h18M8 6v14a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Curăță
+        </button>
       </div>
 
       <div id="raspuns" aria-live="polite"></div>
@@ -161,81 +203,69 @@
   <div class="signature">Făcut de Denis</div>
 
   <script>
-    // Stocare rezumate lungi, în limba română
+    // Rezumate extinse
     const rezumate = {
-      "cenușăreasa": `Cenușăreasa este o tânără blândă care trăiește cu mama și surorile vitrege după moartea tatălui. Viața ei e grea, ea muncește în bucătărie și poartă haine rupte. O zână bună o ajută să meargă la bal, îi dă o rochie frumoasă și pantofi de sticlă, dar lasă o condiție: magia ține până la miezul nopții. La bal, prințul rămâne impresionat de ea, dar ea fuge la miezul nopții și pierde un pantof. Prințul pornește să o caute în tot regatul, încercând pantoful pe toate domnișoarele. Cenușăreasa îl probează, iar când pantoful se potrivește, adevărul iese la iveală și ea se căsătorește cu prințul, părăsind viața de servitoare.`,
+      "cenușăreasa": `Cenușăreasa este o tânără blândă care rămâne fără sprijin după moartea tatălui. Mama și surorile vitrege o tratează aspru. Cenușăreasa muncește fără odihnă, are grijă de casă și visează la o viață mai bună. Într-o zi apare vestea unui bal la curte. O zână îi oferă o rochie frumoasă și pantofi de sticlă, dar avertizează că magia ține doar până la miezul nopții. La bal, prințul îi observă ea. Cei doi se îndrăgostesc, dar Cenușăreasa fuge la miezul nopții. Ea scapă, dar pierde un pantof. Prințul merge în întregul regat să o găsească pe posesoarea pantofului. După multe încercări, pantoful se potrivește și ea este recunoscută. Finalul arată eliberarea din suferință, recunoașterea binelui și începutul unei vieți noi. Tema principală este bunătatea recompensată și trecerea de la greutăți la fericire.`,
+      
+      "harap alb": `Harap Alb pornește la drum pentru a-și împlini o misiune impusă de tată. Călătoria îl întâlnește cu creaturi ciudate și cu încercări puternice. Pe parcurs, Harap Alb face prieteni cu puteri speciale. Acești tovarăși îl ajută la nevoie. Povestea evidențiază transformarea eroului, de la naivitate la maturitate. El învață responsabilitatea, curajul și altruismul. Conflictul principal apare din confruntarea dintre bine și rău, iar rezolvarea vine din cooperare și iscusință. În final, Harap Alb își dovedește valoarea și primește recunoașterea meritată.`,
 
-      "harap alb": `Harap Alb este povestea unui tânăr curajos care pleacă de acasă pentru a-și împlini un jurământ. El trece prin multe încercări, întâlnește personaje fantastice și câștigă prieteni loiali. În drum spre palat el se confruntă cu ispite, capcane și dușmani puternici. Prietenii îl ajută cu talente speciale, iar împreună înving răul. Tema principală este maturizarea, responsabilitatea și rolul prieteniei în biruință.`,
+      "amintiri din copilărie": `Amintiri din copilărie este un conglomerat de povestiri despre copilăria lui Nică. Autorul descrie scene de familie, jocuri, năzbâtii și întâmplări amuzante. Limbajul este viu, plin de expresii populare. Textele transmit căldura vieții rurale, dar și momentele tensionate cu discipline și pedepse. Cititorul înțelege cum experiențele timpurii modelează caracterul. Importanța lecturii, a prieteniei și a tradițiilor locale își face loc în fiecare episod.`,
 
-      "amintiri din copilărie": `Amintiri din copilărie descriu viața unui copil în satul tradițional. Nică povestește întâmplări reale, pline de umor, poante și observații vii despre oameni. Autorul surprinde obiceiuri, jocuri, pedepse și lecturi din vremea aceea. Textele arată valoarea memoriei și agreabilitatea limbajului popular. Cititorul înțelege dinamica familiei și a comunității în care a crescut protagonistul.`,
+      "povestea lui stan pățitu": `Stan Pățitu trece printr-o serie de înfrângeri cauzate de naivitate. Este păcălit, pierde bani și suferă umilințe. Pe parcurs, el învață din greșelile sale și devine mai precaut. Povestea are ton moralizator. Mesajul este clar: experiența aduce înțelepciune. Personajul rămâne memorabil prin umorul situațiilor și prin reacțiile sale sincere.`,
 
-      "povestea lui stan pățitu": `Stan Pățitu este un personaj care trece prin învățături dure. El este păcălit, pierde bani și se întoarce la viață mai precaut. Povestirea subliniază importanța vigilenței și a învățării din greșeli. Tema centrală este maturizarea morală și consecințele încrederii oarbe.`,
+      "făt-frumos din lacrimă": `Făt-Frumos din lacrimă este o poveste cu accente poetice. Eroul apare ca o manifestare a purității. El pornește în misiuni care testează credința, vitejia și atașamentul față de valorile morale. Peripețiile sale includ probe de curaj și de loialitate. Tema este lupta pentru dreptate și restaurarea ordinii. Finalul aduce vindecare și recunoaștere a meritelor protagonistului.`,
 
-      "făt-frumos din lacrimă": `Făt-Frumos din lacrimă este o poveste poetică despre un erou născut dintr-o lacrimă, simbol al purității. El trece prin probe care îi testeză curajul și devotamentul pentru adevăr. Legătura cu iubirea și idealul eroic sunt teme persistente. Finalul aduce restabilirea dreptății și recunoașterea valorii caracterului.`,
+      "punguța cu doi bani": `Punguța cu doi bani urmează destinul unui țăran care găsește o mică avere. Acea punguță îi schimbă viața. Apar conflicte și încercări venite din lăcomia altora. Punguța devine simbol al norocului, dar și al responsabilității. Personajele reacționează în moduri care dezvăluie trăsături morale: invidie, avariție, hărnicie. Povestea ilustrează că norocul trebuie gestionat cu înțelepciune.`,
 
-      "punguța cu doi bani": `Punguța cu doi bani urmărește viața unui țăran sărac care găsește o mică avere și astfel schimbă destinul familiei sale. După ce un ținut nesăbuit încearcă să-i ia punguța, povestea arată cum istețimea și norocul pot răsplăti perseverența. Temele sunt prudența, hărnicia și consecințele actelor egoiste.`,
+      "capra cu trei iezi": `Capra cu trei iezi pune în față o lecție clară despre ascultare. Mama capră le spune ieziilor reguli stricte pentru a se proteja de lup. Doi iezi nu respectă instrucțiunile, iar consecința este tragică. Cel care ascultă scapă. Pe final, mama își răzbună copiii și restabilește ordinea. Tema morală este clară: ascultarea protejează viața.`,
 
-      "capra cu trei iezi": `Capra cu trei iezi vorbește despre responsabilitate parentală și pericolele neascultării. Mama capră le dă copiilor reguli clare pentru a nu deschide ușa lupului. Doi iezi sunt păcăliți și mâncați, iar doar cel care a respectat sfatul scapă. După aceea mama se răzbună pe lup, readucând ordinea și învățătura morală a poveștii.`,
+      "ursul păcălit de vulpe": `Vulpea folosește viclenia pentru a păcăli ursul, personaj simbol al forței fără minte. Povestea arată că inteligența poate învinge puterea brută. Prin situații de umor, cititorul înțelege valoarea istețimii și a prudenței. Finalul întărește ideea că mintea și experiența sunt resurse importante.`,
 
-      "ursul păcălit de vulpe": `Ursul păcălit de vulpe prezintă confruntarea dintre forță și istețime. Vulpea, cu viclenie, îl păcălește pe urs și îl lasă în dificultate. Povestea subliniază că puterea fără minte poate fi învinsă de inteligență. Mesajul este clar, omul trebuie să folosească mintea, nu doar forța.`,
+      "dănilă prepeleac": `Dănilă Prepeleac este un personaj caricatural care, din prostie, pierde tot ce are. Povestea are momente de absurd și umor, dar transmite și un mesaj despre consecințele acțiunilor nechibzuite. În final, destinul personajului ia o întorsătură care obligă cititorul să reconsidere judecata inițială. Mesajul este despre echilibrul dintre noroc și responsabilitate.`,
 
-      "dănilă prepeleac": `Dănilă Prepeleac este un om simplu care face greșeli mari dar nu renunță. El pierde şi câștigă, trece prin situații absurde și învață pe parcurs. Povestea are umor, dar arată și lecții practice despre noroc, prostie și îndemânare. Finalul oferă o răsturnare care te face să regândești judecățile inițiale.`,
+      "soacra cu trei nurori": `Soacra cu trei nurori analizează relațiile domestice și criteriile de valoare într-o comunitate mică. Hărnicia și bunătatea sunt răsplătite. Lenea și ipocrizia primesc consecințe. Textul funcționează ca o oglindă morală a societății tradiționale.`,
 
-      "soacra cu trei nurori": `Soacra cu trei nurori prezintă relații familiale complicate. Narativa compară atitudini, răsplătește hărnicia și pedepseste lenevia. Personajele ilustrează tipare morale și sociale ale satului tradițional. Textul funcționează ca o lecție despre respect și virtute.`,
+      "ivan turbincă": `Ivan Turbincă este o poveste plină de umor, în care un soldat primește o turbincă fermecată. Cu ajutorul ei, el păcălește forțele supranaturale și scapă din situații dificile. Povestea combină fantastica cu comicitatea, iar tema centrală este prefăcătoria și istețimea ca instrumente de supraviețuire.`,
 
-      "ivan turbincă": `Ivan Turbincă este o poveste despre un soldat isteț care primește o turbincă fermecată. Cu turbinca el păcălește și înfrânge forțe supranaturale. Tema centrală este folosirea inteligenței pentru a scăpa de primejdii. Povestea are umor și elemente fantastice, iar finalul subliniază recompensa istețimii.`,
+      "lupul și mielul": `Fabula expune o lecție morală despre abuzul de putere. Lupul reprezintă forța celor privilegiați, iar mielul simbolizează neputința. Mesajul spune că dreptatea nu este întotdeauna aplicată când prevalează forța. Fabula invită la reflecție și la apel pentru corectitudine.`,
 
-      "lupul și mielul": `Fabula arată cum puterea poate inventa pretexte pentru a-i face rău celui slab. Personajele sunt simbolice, fiecare reprezintă o atitudine. Moralitatea se citește direct, dreptatea poate fi falsificată de cei puternici. Mesajul este un apel la corectitudine și reflecție.`,
+      "meșterul manole": `Balada Meșterul Manole descrie sacrificiul creatorilor. Meșterii încearcă să ridice o mănăstire care se prăbușește. În final, se zidește un sacrificiu uman pentru a asigura stabilitatea lucrării. Povestea pune întrebări despre prețul operei și despre responsabilitatea creativității.`,
 
-      "meșterul manole": `Balada Meșterul Manole este o poveste tragică despre sacrificiu pentru artă. Meșterii construiesc o mănăstire care nu rezistă, până când un suflet trebuie zidit în piatră pentru ca lucrul să rămână. Tema sacrificiului personal pentru o creație durabilă stă în centrul baladei. Textul ridică întrebări despre prețul frumuseții și obligația creatorului.`,
+      "moara cu noroc": `Moara cu noroc urmărește degradarea morală a lui Ghiță, un om care, atras de profit, ia decizii tot mai discutabile. Pe măsură ce implicarea în afaceri crește, conflictul interior se transformă în tragedie. Autorul prezintă detalii psihologice și sociale care explică declinul personajului. Tema este avertismentul împotriva lăcomiei.`,
 
-      "moara cu noroc": `Moara cu noroc urmărește viața lui Ghiță, care pornește cu intenții bune dar e sedus de câștig. Pe măsură ce intră în afaceri, conflictele etice cresc și viața îi devine amenințată. Povestea arată cum lăcomia, frica și compromisurile distrug onoarea. Finalul servește ca avertisment despre prețul pierderii valorilor.`,
+      "alexandru lapusneanul": `Povestirea redă figura unui conducător aspru, centru al tensiunii politice. Actele sale de cruzime produc efecte asupra întregii societăți. Textul analizează mecanismele puterii și costurile violenței. Apare o reflecție despre justiție și responsabilitatea celor ce conduc.`,
 
-      "alexandru lapusneanul": `Povestirea prezintă figura unui domn cu tendințe tiranice care revine pentru răzbunare. Textul expune violența politicii și consecințele brutalității. Tema centrală este abuzul puterii și costul acesteia pentru societate. Personajele secundare oferă contrapunct moral și arată haosul pe care-l lasă în urmă.`,
+      "enigma otiliei": `Enigma Otiliei descrie relații, moșteniri și calcule sociale. Felix se află într-un joc în care interesul material și sentimentele se intersectează. Otilia simbolizează complexitatea femeii moderne confruntate cu așteptările sociale. Romanul observă cu acuitate natura intereselor și consecințele lor.`,
 
-      "enigma otiliei": `Enigma Otiliei urmărește relațiile complicate dintre moșteniri, iubire și interese sociale. Felix, tânăr prudent, și Otilia, femeie complexă, se află în centrul unui tablou al societății burgheze. Tema e lupta între sentimente sincere și interese materiale. Romanul dezvăluie ipocrizia și mecanismele sociale care influențează alegerile.`,
-
-      "moara cu noroc (rezumat extra)": `Moara cu noroc arată cum tentația banilor alterează caractere. Ghiță se lasă prins în jocuri murdare, iar relațiile se destramă. Autorul descrie mediul, oamenii și transformarea sufletească a protagonistului. Povestea oferă exemple concrete despre cum deciziile mici duc la catastrofe morale.`,
-
-      "la hanul lui mânjoală": `La hanul lui Mânjoală are accente fantastice și satirice. Personajele descoperă secrete și legende care pot schimba percepția realității. Povestirea alternă între umor și mister, iar finalul lasă cititorul cu întrebări despre real și imaginar. Tema este echilibrul dintre credință și rațiune.`,
-
-      "popa tanda": `Popa Tanda este despre un preot care trece de la lene la implicare. El descoperă că exemplul personal schimbă comunitatea. Povestea arată transformarea interioară și responsabilitatea socială. Mesajul este despre puterea schimbării prin acțiuni concrete.`,
-
-      "doamna traista": `Doamna Traista prezintă inventivitatea unei femei care își salvează familia din dificultăți. Ea găsește soluții practice, unele amuzante, care dau speranță comunității. Povestea pune accent pe forța ingeniozității și pe solidaritate.`,
-
-      "povestiri populare extra": `Am inclus aici și alte rezumate scurte. Dacă vrei detalii mai lungi pentru o povestire anume, spune titlul și îți dezvolt pe pagini separate.`
+      "la hanul lui mânjoală": `Povestirea combină fantasticul cu satira. Personajele sunt prinse în situații care pun la grea încercare credința și rațiunea. Elementele misterioase creionează o atmosferă în care realitatea pare flexibilă. Tema este conviețuirea dintre mit și logică.`
     };
 
-    // Helper: afișează lista de titluri
+    // Utilitare
     function showLista(){
-      const titluri = Object.keys(rezumate).map(t => "- " + t).join("\n");
-      document.getElementById("raspuns").innerText = "Povestiri disponibile:\n" + titluri + "\n\nScrie: rezumat NUME_POVESTIRE";
+      const titluri = Object.keys(rezumate).map(t => "• " + t).join("\n");
+      document.getElementById("raspuns").innerText = "Povestiri disponibile:\n\n" + titluri + "\n\nScrie: rezumat NUME_POVESTIRE";
     }
 
-    // Sterge input si raspuns
     function sterge(){
       document.getElementById("intrebare").value = "";
       document.getElementById("raspuns").innerText = "";
     }
 
-    // Validare expresie matematica sigura
+    // Validare calcul
     function esteCalculValabil(expr){
-      // Acceptă cifre, spații, operatori + - * / . ( ) și caractere x și :
+      // acceptă cifre, spații, operatori + - * / . ( ) și caractere x și :
       const safe = /^[0-9+\-*/().\sx:]+$/i;
-      return safe.test(expr);
+      return safe.test(expr.trim());
     }
 
     function evalueazaCalcul(expr){
-      // Înlocuiește x cu * și : cu /
       const normalized = expr.replace(/x/gi, "*").replace(/:/g, "/");
-      // Blochează expresii cu două operatori la rând sau început cu operator invalid
       if (!esteCalculValabil(normalized)) throw "Invalid";
-      // Eval într-un mod limitat
-      // Folosim Function, dar doar după validare strictă
+      // blocăm operatori dubli
+      if (/[+\-*/]{2,}/.test(normalized.replace(/\s+/g,''))) throw "Invalid";
+      // evităm execuții periculoase: doar cifre și operatori în expresie
       try{
-        // Prevenim cazuri cu operatori dubli ca "++" sau "**"
-        if (/[+\-*/]{2,}/.test(normalized.replace(/\s+/g,''))) throw "Invalid";
-        const fn = new Function("return (" + normalized + ")"); 
+        const fn = new Function("return (" + normalized + ")");
         const val = fn();
         if (typeof val === "number" && isFinite(val)) return val;
         throw "Invalid";
@@ -249,16 +279,14 @@
     function genereazaRaspuns(){
       const raw = document.getElementById("intrebare").value.trim();
       const text = raw.toLowerCase();
-      if(!text){
+      if (!text){
         document.getElementById("raspuns").innerText = "Scrie o întrebare sau un exercițiu.";
         return;
       }
 
       // 1. Cerere explicită rezumat
       if (text.startsWith("rezumat ") || text.startsWith("rezum ") || text.includes("rezumat")){
-        // găsește titlul după cuvântul rezumat
         const after = text.replace(/^rezumat\s*/,'').replace(/^rezum\s*/,'').trim();
-        // căutare exactă sau parțială
         let gasit = "";
         if (after){
           for (const key of Object.keys(rezumate)){
@@ -267,7 +295,6 @@
             }
           }
         }
-        // dacă nu este nume, încercă să detectezi titlul în propoziție
         if (!gasit){
           for (const key of Object.keys(rezumate)){
             if (text.includes(key)) { gasit = key; break; }
@@ -278,12 +305,12 @@
           ultimulRaspuns = rezumate[gasit];
           return;
         } else {
-          document.getElementById("raspuns").innerText = "Nu am găsit povestea. Folosește butonul Lista povestiri pentru a vedea titlurile exacte.";
+          document.getElementById("raspuns").innerText = "Nu am găsit povestea. Apeasă Lista pentru titluri exacte.";
           return;
         }
       }
 
-      // 2. Căutare directă titlu (fără cuvânt rezumat)
+      // 2. Căutare directă titlu
       for (const key of Object.keys(rezumate)){
         if (text === key || text.includes(key) || key.includes(text)){
           document.getElementById("raspuns").innerText = rezumate[key];
@@ -294,7 +321,6 @@
 
       // 3. Calcul matematic
       try{
-        // dacă pare un calcul
         if (esteCalculValabil(text)){
           const rez = evalueazaCalcul(text);
           const rasp = "Rezultatul este: " + rez;
@@ -303,37 +329,37 @@
           return;
         }
       }catch(e){
-        // trecem mai departe la explicații
+        // trecem la explicații
       }
 
-      // 4. Explicații de matematică sau română
+      // 4. Explicații matematică sau română
       if (text.includes("algebr") || text.includes("ecua")){
-        const msg = "Algebra clasei a 6-a include expresii, operatii cu numere, ecuatii simple si rezolvare de probleme. Exemplu concret: x + 5 = 12, atunci x = 7. Dacă ai o ecuație, scrie-o și îți arăt pașii.";
+        const msg = "Algebra clasei a 6-a include expresii, operații cu numere, ecuații simple și rezolvare de probleme. Exemplu: x + 5 = 12, atunci x = 7. Dacă ai o ecuație, scrie-o și îți arăt pașii.";
         document.getElementById("raspuns").innerText = msg;
         ultimulRaspuns = msg;
         return;
       }
       if (text.includes("geometr") || text.includes("triunghi") || text.includes("aria")){
-        const msg = "Geometria include studiul figuri plane, masurarea unghiurilor si calculul ariilor. Suma unghiurilor unui triunghi este 180 de grade. Scrie o figură sau o problemă și îți arăt cum se calculează.";
+        const msg = "Geometria include figuri plane, măsurarea unghiurilor și calculul ariilor. Suma unghiurilor într-un triunghi este 180°. Scrie o problemă concretă și îți arăt cum se rezolvă.";
         document.getElementById("raspuns").innerText = msg;
         ultimulRaspuns = msg;
         return;
       }
       if (text.includes("fractii") || text.includes("procent") || text.includes("numere prime")){
-        const msg = "Pot explica fracții, procente sau noțiuni despre numere prime. Scrie o întrebare concretă sau un exercițiu și îți explic pas cu pas.";
+        const msg = "Pot explica fracții, procente sau noțiuni despre numere prime. Scrie un exercițiu concret și îți explic pas cu pas.";
         document.getElementById("raspuns").innerText = msg;
         ultimulRaspuns = msg;
         return;
       }
 
-      // 5. Dacă nu a fost nimic potrivit
-      document.getElementById("raspuns").innerText = "Nu am găsit răspunsul. Scrie 'rezumat' urmat de titlu sau pune un calcul. Folosește butonul Lista povestiri pentru a vedea titlurile.";
+      // 5. Nimic potrivit
+      document.getElementById("raspuns").innerText = "Nu am găsit răspunsul. Scrie 'rezumat' urmat de titlu sau pune un calcul. Folosește Lista pentru titluri.";
     }
 
     // Recunoaștere vocală
     function vorbeste(){
       if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)){
-        alert("Recunoașterea vocală nu este disponibilă în acest browser.");
+        alert("Recunoașterea vocală nu este indisponibilă în acest browser.");
         return;
       }
       const Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -342,14 +368,17 @@
       rec.interimResults = false;
       rec.maxAlternatives = 1;
       rec.start();
+      document.getElementById("butonVoce").disabled = true;
       rec.onresult = function(e){
         const spus = e.results[0][0].transcript;
         document.getElementById("intrebare").value = spus;
         genereazaRaspuns();
       };
+      rec.onend = function(){
+        document.getElementById("butonVoce").disabled = false;
+      };
       rec.onerror = function(){
-        // Nu afișăm multe mesaje, doar curățăm
-        console.log("Eroare recunoaștere vocală");
+        document.getElementById("butonVoce").disabled = false;
       };
     }
 
@@ -370,16 +399,16 @@
       window.speechSynthesis.speak(utter);
     }
 
-    // Tastare Enter pentru a trimite
+    // Trimite la Ctrl+Enter sau Cmd+Enter
     document.getElementById("intrebare").addEventListener("keydown", function(e){
       if (e.key === "Enter" && (e.ctrlKey || e.metaKey)){
         genereazaRaspuns();
       }
     });
 
-    // Sugestie: exemplu precompletat pentru testare la prima încărcare
+    // Exemplu precompletat prima dată
     if (!localStorage.getItem("prim")) {
-      document.getElementById("intrebare").value = "rezumat Harap Alb";
+      document.getElementById("intrebare").value = "rezumat Cenușăreasa";
       localStorage.setItem("prim","1");
     }
   </script>

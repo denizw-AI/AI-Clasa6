@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Clasa a VI-a</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+    }
+    textarea {
+      width: 80%;
+      height: 100px;
+      font-size: 16px;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #raspuns {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #222;
+      text-align: left;
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>AI Clasa a VI-a – Română și Matematică</h1>
+  <p>Scrie o întrebare sau un exercițiu. Exemplu: <i>rezumat Cenușăreasa</i> sau <i>8+9</i></p>
+  <textarea id="intrebare" placeholder="Scrie aici..."></textarea><br>
+  <button onclick="genereazaRaspuns()">Răspunde</button>
+
+  <div id="raspuns"></div>
+
+  <script>
+    function genereazaRaspuns() {
+      const text = document.getElementById("intrebare").value.toLowerCase().trim();
+      let raspuns = "";
+
+      // Rezumate la povestiri
+      const rezumate = {
+        "cenușăreasa": "Cenușăreasa este o fată harnică și bună care trăiește cu mama și surorile vitrege. Este ajutată de o zână să meargă la bal, unde îl întâlnește pe prinț. După ce își pierde pantoful, prințul o caută și o ia de soție.",
+        "cititorul din peșteră": "Romanul 'Cititorul din peșteră' de Rui Zink spune povestea unui băiat care naufragiază și ajunge pe o insulă. Acolo îl cunoaște pe O Bibliotecar, o ființă misterioasă care îl învață valoarea lecturii și a cunoașterii.",
+        "harap alb": "Harap Alb, de Ion Creangă, este fiul de crai care pornește într-o călătorie plină de încercări pentru a deveni împărat. Cu ajutorul unor prieteni neobișnuiți, el dovedește curaj, inteligență și bunătate.",
+        "amintiri din copilărie": "Opera lui Ion Creangă descrie copilăria lui Nică în satul Humulești. Povestea surprinde momente hazlii, precum furatul cireșelor sau scăldatul, dar și valorile familiei și ale satului românesc.",
+        "povestea lui stan pățitu": "Stan Pățitu, de Ion Creangă, este un tânăr care învață din greșelile sale. După ce este păcălit de o femeie, el devine mai atent și înțelept, dovedind că experiența aduce învățătură."
+      };
+
+      // Caută povestirea
+      for (const [titlu, rezumat] of Object.entries(rezumate)) {
+        if (text.includes(titlu)) {
+          raspuns = rezumat;
+        }
+      }
+
+      // Dacă nu e povestire, verifică dacă e calcul
+      if (raspuns === "") {
+        try {
+          // Înlocuiește x cu * pentru înmulțire
+          const calcul = text.replace(/x/g, "*").replace(/:/g, "/");
+          if (/^[0-9+\-*/().\s]+$/.test(calcul)) {
+            const rezultat = eval(calcul);
+            raspuns = "Rezultatul este: " + rezultat;
+          }
+        } catch (e) {
+          raspuns = "Nu am putut înțelege exercițiul.";
+        }
+      }
+
+      // Întrebări simple de matematică
+      if (raspuns === "") {
+        if (text.includes("algebr") || text.includes("ecua")) {
+          raspuns = "În algebra clasei a VI-a înveți despre expresii, ecuații simple și proprietățile numerelor. Un exemplu: x + 5 = 12, soluția este x = 7.";
+        } else if (text.includes("geometr") || text.includes("triunghi")) {
+          raspuns = "În geometrie înveți despre figuri plane. Suma unghiurilor într-un triunghi este 180°.";
+        } else if (text.includes("fractii")) {
+          raspuns = "O fracție reprezintă o parte dintr-un întreg. Exemplu: 1/2 înseamnă o jumătate.";
+        } else if (text.includes("procent")) {
+          raspuns = "Procentul arată o parte dintr-un întreg de 100. Exemplu: 25% din 200 este 50.";
+        }
+      }
+
+      if (raspuns === "") {
+        raspuns = "Nu am găsit răspunsul. Încearcă altă întrebare sau un calcul.";
+      }
+
+      document.getElementById("raspuns").innerText = raspuns;
+    }
+  </script>
+</body>
+</html>

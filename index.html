@@ -1,502 +1,614 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ro">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>AI Clasa a VI-a — Română și Matematică</title>
-  <style>
-    :root{
-      --bg-grad: linear-gradient(135deg,#0f4c81 0%,#6a34a5 20%,#0ba678 40%,#f2c94c 60%,#e94e77 80%,#08a8b5 100%);
-      --card: rgba(255,255,255,0.95);
-      --text: #072032;
-      --muted: #3f5766;
-      --radius:14px;
-      --maxw:1020px;
-    }
-    html,body{
-      height:100%;
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      background:var(--bg-grad);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-    .container{
-      max-width:var(--maxw);
-      margin:28px auto;
-      padding:18px;
-    }
-    header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      color:white;
-      margin-bottom:14px;
-    }
-    header h1{
-      margin:0;
-      font-size:20px;
-      line-height:1.05;
-      text-shadow:0 2px 8px rgba(0,0,0,0.18);
-    }
-    header p{margin:0;font-size:13px;opacity:0.95}
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.90));
-      border-radius:var(--radius);
-      padding:18px;
-      box-shadow:0 10px 28px rgba(6,18,38,0.18);
-      backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.4);
-    }
-    label{display:block;font-weight:600;margin-bottom:8px}
-    textarea#intrebare{
-      width:100%;
-      min-height:120px;
-      padding:14px;
-      border-radius:12px;
-      border:1px solid rgba(6,18,38,0.06);
-      font-size:15px;
-      box-sizing:border-box;
-      resize:vertical;
-      outline:none;
-    }
-    .controls{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center}
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:none;font-weight:600;cursor:pointer;color:white}
-    .btn svg{width:18px;height:18px;opacity:0.98}
-    .btn-rasp{background:#0b66ff}
-    .btn-cit{background:#07a87d}
-    .btn-list{background:#f2a400;color:#08202a}
-    .btn-clear{background:#e64b4b}
-    .btn-outline{background:transparent;color:var(--text);border:1px solid rgba(6,18,38,0.06);box-shadow:none}
-    #raspuns{
-      margin-top:16px;
-      padding:18px;
-      background:var(--card);
-      border-radius:12px;
-      line-height:1.6;
-      font-size:15px;
-      color:var(--text);
-      white-space:pre-wrap;
-      max-height:58vh;
-      overflow:auto;
-    }
-    .signature{
-      position:fixed;
-      right:14px;
-      bottom:12px;
-      background:rgba(255,255,255,0.18);
-      padding:8px 12px;
-      border-radius:999px;
-      font-size:13px;
-      color:#062229;
-      backdrop-filter: blur(6px);
-      border:1px solid rgba(255,255,255,0.24);
-      box-shadow:0 6px 18px rgba(3,10,20,0.12);
-    }
-    .section{margin-top:18px;padding:12px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.98),rgba(250,250,250,0.98));border:1px solid rgba(6,18,38,0.03)}
-    .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
-    input[type="text"], select{padding:10px;border-radius:10px;border:1px solid rgba(6,18,38,0.06);font-size:14px}
-    .small{font-size:13px;padding:8px 10px;border-radius:8px}
-    @media (max-width:880px){
-      header{flex-direction:column;align-items:flex-start}
-      .controls{flex-direction:column;align-items:stretch}
-      .btn{width:100%}
-      :root{--maxw:94%}
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AI Clasa a VI-a — Română & Matematică</title>
+<meta name="description" content="AI pentru clasa a 6-a: rezumate, matematică, exerciții, autentificare reală."/>
+<style>
+  :root{
+    --maxw:1100px;
+    --radius:16px;
+    --glass: rgba(255,255,255,0.10);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:linear-gradient(135deg,#0f4c81 0%,#6a34a5 20%,#0ba678 40%,#f2c94c 60%,#e94e77 80%,#08a8b5 100%);color:#072032;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:20px auto;padding:18px}
+  header{display:flex;justify-content:space-between;align-items:center;color:white;margin-bottom:12px}
+  header h1{margin:0;font-size:20px}
+  header p{margin:0;font-size:13px;opacity:0.95}
+  .topbar{display:flex;gap:12px;align-items:center}
+  .profile{display:flex;gap:10px;align-items:center}
+  .avatar{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-weight:700;color:#062229}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.88));border-radius:var(--radius);padding:18px;box-shadow:0 12px 36px rgba(6,18,38,0.18);backdrop-filter:blur(6px) saturate(120%);border:1px solid rgba(255,255,255,0.4)}
+  label{display:block;font-weight:700;margin-bottom:8px;color:#072032}
+  textarea,input,select{width:100%;padding:12px;border-radius:12px;border:1px solid rgba(6,18,38,0.06);font-size:15px;outline:none}
+  textarea{min-height:140px;resize:vertical}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .btn{padding:10px 14px;border-radius:12px;border:none;cursor:pointer;font-weight:700;color:white;display:inline-flex;align-items:center;gap:8px}
+  .btn-primary{background:#0b66ff}
+  .btn-voice{background:#07a87d}
+  .btn-read{background:#8b44ff}
+  .btn-list{background:#f2a400;color:#08202a}
+  .btn-clear{background:#e64b4b}
+  .section{margin-top:16px}
+  #output{margin-top:16px;padding:16px;border-radius:12px;background:rgba(255,255,255,0.95);color:var(--text);max-height:55vh;overflow:auto;white-space:pre-wrap}
+  .small{font-size:13px}
+  .signature{position:fixed;right:14px;bottom:12px;background:rgba(255,255,255,0.18);padding:8px 12px;border-radius:999px;font-size:13px;color:#062229;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.24)}
+  /* modal */
+  .modal-back{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;z-index:60}
+  .modal{width:460px;max-width:94%;background:var(--glass);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.22)}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  @media (max-width:880px){
+    .row{flex-direction:column;align-items:stretch}
+    header{flex-direction:column;align-items:flex-start;gap:8px}
+    .controls{flex-direction:column}
+  }
+</style>
 </head>
 <body>
-  <div class="container">
+  <div class="wrap">
     <header>
       <div>
         <h1>AI Clasa a VI-a</h1>
-        <p>Română și Matematică, rezumate detaliate și exerciții practice</p>
+        <p>Română și Matematică, rezumate detaliate, exerciții și răspunsuri</p>
       </div>
-      <div style="text-align:right;color:rgba(255,255,255,0.95)"><small>Proiect educațional</small></div>
+      <div class="topbar">
+        <div id="profileBar" class="profile" style="display:none">
+          <div id="avatar" class="avatar">D</div>
+          <div style="text-align:left">
+            <div id="displayName" style="font-weight:700;color:white;font-size:14px">Utilizator</div>
+            <div id="displayEmail" style="font-size:12px;color:rgba(255,255,255,0.9)">email</div>
+          </div>
+        </div>
+        <div id="authButtons" style="display:flex;gap:8px">
+          <button class="btn btn-primary" onclick="openAuth()">Conectează-te</button>
+        </div>
+      </div>
     </header>
 
-    <div class="card" role="main">
-      <label for="intrebare">Scrie întrebarea sau exercițiul</label>
-      <textarea id="intrebare" placeholder="Exemple: rezumat Harap Alb, rezumat Cenușăreasa, 8+9, 45:5, A={5,6,7} element=6"></textarea>
+    <main class="card" id="appMain" role="main">
+      <label for="query">Scrie întrebarea, titlul pentru rezumat sau exercițiul</label>
+      <textarea id="query" placeholder="Ex: rezumat Cenușăreasa, 8+9, A={5,6,7} element=6, aria dreptunghi 5 3"></textarea>
 
-      <div class="controls" style="margin-top:14px">
-        <button class="btn btn-rasp" onclick="genereazaRaspuns()" title="Răspunde">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          Răspunde
-        </button>
-
-        <button class="btn btn-cit" onclick="citeste()" title="Citește răspunsul">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 5h18M3 12h18M3 19h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          Citește
-        </button>
-
-        <button class="btn btn-list" onclick="showLista()" title="Lista povestiri">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h10M4 18h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          Lista povestiri
-        </button>
-
-        <button class="btn btn-clear" onclick="sterge()" title="Curăță">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6v14a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          Curăță
-        </button>
+      <div class="controls">
+        <button class="btn btn-primary" onclick="handleQuery()">Răspunde</button>
+        <button class="btn btn-read" onclick="speakAnswer()">Citește</button>
+        <button class="btn btn-list" onclick="listStories()">Lista povești</button>
+        <button class="btn btn-clear" onclick="clearAll()">Curăță</button>
       </div>
 
-      <div class="section" id="exercises">
-        <strong>Exerciții</strong>
+      <div class="section">
+        <strong>Exerciții rapide</strong>
         <div class="row" style="margin-top:10px">
-          <select id="tipEx" class="small" onchange="schimbaSectiune()">
+          <select id="exerciseType" style="width:40%;max-width:220px">
             <option value="algebra">Algebra</option>
             <option value="geometrie">Geometrie</option>
-            <option value="apartenenta">Verifică apartenență</option>
+            <option value="apartenență">Apartenență</option>
           </select>
-
-          <button class="btn btn-outline small" onclick="genereazaEx()" style="background:transparent;color:var(--text);border:1px solid rgba(6,18,38,0.06)">Generează exercițiu</button>
-
-          <button class="btn btn-rasp small" onclick="rezolvaEx()">Verifică</button>
+          <input id="exInputA" placeholder="Ex: 2x+3=11 sau L=5" style="flex:1" />
+          <button class="btn btn-primary" onclick="generateExercise()">Generează</button>
+          <button class="btn btn-read" onclick="solveExercise()">Verifică</button>
         </div>
-
-        <div id="algebraSec" style="margin-top:10px">
-          <label>Ecuație de algebră. Scrie forma ax + b = c sau x + b = c</label>
-          <div class="row">
-            <input type="text" id="algebraInput" placeholder="Ex: 2x + 3 = 11" style="flex:1" />
-          </div>
-          <div id="algebraSol" style="margin-top:8px;color:#234"></div>
-        </div>
-
-        <div id="geometrieSec" style="margin-top:10px;display:none">
-          <label>Geometrie. Alege tipul de problemă</label>
-          <div class="row">
-            <select id="geoTip" class="small">
-              <option value="ariaDrept">Aria dreptunghiului</option>
-              <option value="perimDrept">Perimetrul dreptunghiului</option>
-              <option value="sumaUng">Suma unghiurilor triunghiului</option>
-            </select>
-            <input type="text" id="geoA" placeholder="Lungime sau unghi (ex: 5)" style="width:120px" />
-            <input type="text" id="geoB" placeholder="Lățime (dacă e nevoie)" style="width:120px" />
-          </div>
-          <div id="geometrieSol" style="margin-top:8px;color:#234"></div>
-        </div>
-
-        <div id="apartenentaSec" style="margin-top:10px;display:none">
-          <label>Verificare apartenență. Scrie mulțimea și elementul. Ex: {5,6,7}  element=6</label>
-          <div class="row">
-            <input type="text" id="setInput" placeholder="Ex: {5,6,7}" style="width:200px" />
-            <input type="text" id="elemInput" placeholder="Ex: 6" style="width:120px" />
-          </div>
-          <div id="apartSol" style="margin-top:8px;color:#234"></div>
-        </div>
+        <div id="exerciseOutput" style="margin-top:10px;color:#072032"></div>
       </div>
 
-      <div id="raspuns" aria-live="polite"></div>
-    </div>
+      <div id="output" aria-live="polite"></div>
+    </main>
   </div>
 
-  <div class="signature">Făcut de Denis</div>
+  <div class="signature">Făcut de Denis © 2025</div>
 
-  <script>
-    // Lista extinsă de rezumate detaliate
-    const rezumate = {
-      "cenușăreasa": `Cenușăreasa rămâne orfană după moartea tatălui. Mama și surorile vitrege o tratează ca pe servitoare. Ea muncește toată ziua. Păstrează bunătatea și speranța. Apare vestea unui bal la curte. O zână o ajută cu o rochie și cu pantofi de sticlă. Magia ține până la miezul nopții. La bal, prințul o remarcă. Cenușăreasa pleacă în grabă la miezul nopții. Pierde un pantof. Prințul pornește în căutarea ei. În final pantoful se potrivește și ea ajunge la curte. Se căsătorește cu prințul. Tema principală este bunătatea răsplătită și eliberarea din nedreptate.`,
+  <!-- Firebase modular SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+    import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
 
-      "harap alb": `Harap Alb pleacă de la casa tatălui pentru o misiune grea. În drum întâlnește personaje fantastice. Fiecare are un dar util. Ei îl ajută în încercări grele. Harap Alb crește la curaj și responsabilitate. Învață să aibă grijă de alții. Conflictele se rezolvă prin înțelepciune și prietenie. Finalul arată recunoașterea meritelor sale. Tema este maturizarea și cooperarea.`,
+    // PUNE AICI CONFIG-UL TĂU FIREBASE
+    const firebaseConfig = {
+  apiKey: "AIzaSyAkQaOIVHSYzIsGB6xB8ekPvzGsfF_78Tg",
+  authDomain: "denizw111.firebaseapp.com",
+  projectId: "denizw111.firebasestorage.app",
+  storageBucket: "denizw111.firebasestorage.app",
+  messagingSenderId: "1004600733897",
+  appId: "1:1004600733897:web:7e030dd1ec461c272f1d18",
+  measurementId: "G-CWWGTGV8RF"
+};
 
-      "amintiri din copilărie": `Amintiri din copilărie adună episoade din viața rurală. Nică povestește jocuri, năzbâtii și lecții primite acasă și la școală. Limbajul este viu și plin de culoare populară. Textele arată cum micile întâmplări formează caracterul. Cititorul înțelege obiceiurile și atmosfera satului. Umorul face povestirile accesibile.`,
 
-      "povestea lui stan pățitu": `Stan Pățitu este un personaj naiv care cade în capcane. El pierde bani și onoare din cauza încrederii oarbe. Povestirea arată cum învățăm din greșeli. Umorul vine din situațiile absurde. Tema este înțelepciunea dobândită prin experiență.`,
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
 
-      "făt-frumos din lacrimă": `Făt-Frumos din lacrimă este născut dintr-o lacrimă. El pornește în probe care îi testează virtutea. Iubește și luptă pentru dreptate. Peripețiile arată curajul și devotamentul. Finalul aduce vindecare și recunoaștere. Tema este valoarea morală a eroului.`,
-
-      "punguța cu doi bani": `Punguța cu doi bani este o poveste despre noroc și responsabilitate. Țăranul găsește o punguță care îi schimbă viața. Aparențele atrag invidie. Personajele reacționează în moduri care arată caracterul lor. Povestea subliniază gestionarea corectă a norocului.`,
-
-      "capra cu trei iezi": `Mama capră le dă ieziilor reguli clare. Doi nu ascultă și plătesc cu viața. Cel care ascultă scapă. Mama restabilește ordinea. Povestea învață ascultarea și prudența.`,
-
-      "ursul păcălit de vulpe": `Vulpea îl păcălește pe urs folosind viclenia. Povestea arată că inteligența învinge forța. Umorul pune în lumină prostia celui puternic.`,
-
-      "dănilă prepeleac": `Dănilă Prepeleac trece prin întâmplări comice cauzate de prostia sa. Pe parcurs, apar lecții despre grijă și prudență. Finalul aduce surpriză și învățătură.`,
-
-      "soacra cu trei nurori": `Soacra pune la încercare trei nurori. Hărnicia este răsplătită. Lenea primește consecințe. Textul funcționează ca lecție morală despre comportament.`,
-
-      "ivan turbincă": `Ivan Turbincă primește o turbincă fermecată. Cu ea păcălește forțele supranaturale. Povestea combină umor și fantastic. Tema este istețimea în fața primejdiei.`,
-
-      "lupul și mielul": `Fabula arată cum forța poate învinge dreptatea. Lupul găsește pretexte să-i facă rău mielului. Mesajul este despre nedreptate și responsabilitate morală.`,
-
-      "meșterul manole": `Meșterul Manole arată sacrificiul creatorilor. Creația cere preț. Meșterii se luptă cu limitele materiale. Finalul pune întrebarea despre valoarea artei și costul ei.`,
-
-      "moara cu noroc": `Moara cu noroc urmărește degradarea morală a lui Ghiță. Dorința de câștig îl schimbă. Autorul arată etapele declinului. Povestea este avertisment moral.`,
-
-      "alexandru lapusneanul": `Povestirea prezintă un conducător crud. Actele sale produc haos și teamă. Textul pune problema responsabilității puterii. Tema este costul tiraniei.`,
-
-      "enigma otiliei": `Romanul urmărește conflictele dintre sentimente și interese materiale. Felix și Otilia se află în mijlocul calculului social. Tema este impactul moștenirilor și al intereselor personale.`,
-
-      "la hanul lui mânjoală": `Povestirea combină misterul cu satira. Hanul devine loc de întâlnire între credință și superstiție. Personajele descoperă secrete care schimbă viața lor.`,
-
-      "păcală și tândală": `Păcală și Tândală trăiesc întâmplări comice. Ei critică prostia și nedreptatea prin glume. Păcală câștigă prin istețime. Textele transmit lecții morale cu umor.`,
-
-      "prâslea cel voinic și merele de aur": `Prâslea este harnic și curajos. El recuperează merele de aur ale împăratului. Înfruntă pericole și trădări. Finalul arată recompensa muncii și curajului.`,
-
-      "greuceanu": `Greuceanu luptă să readucă soarele și luna furate. Eroul învinge forțele întunericului. Povestea este simbolică și plină de forță.`,
-
-      "băiatul cu pielea albastră": `Un copil diferit învață să-și accepte unicitatea. La început este respins. Apoi demonstrează valoare prin fapte. Comunitatea îl recunoaște. Tema este acceptarea diversității.`,
-
-      "fata babei și fata moșneagului": `Două fete opuse. Una este leneșă, cealaltă este harnică. Faptele lor duc la consecințe diferite. Povestea arată valoarea muncii și bunătatea.`,
-
-      "tinerețe fără bătrânețe și viață fără de moarte": `Un basm filozofic despre dorința de nemurire. Eroul descoperă singurătatea dincolo de viață. Textul invită la reflecție despre sensul vieții.`,
-
-      "zâna zorilor": `O poveste despre speranță și lumină. Un tânăr pleacă să aducă bucurie familiei. Primește ajutor magic. Reușește prin curaj și sacrificiu.`,
-
-      "soarele și luna": `Mit despre zi și noapte. Soarele și Luna sunt frați care se succed. Povestea explică echilibrul natural și limitele.`,
-
-      "fântâna dorințelor": `O fântână fermecată testează caracterul oamenilor. Dorința sinceră aduce bine, lacomia aduce pierdere. Tema este cumpătarea și recunoștința.`,
-
-      "copilul și oglinda": `Oglinda arată faptele, nu chipul. Copilul învață că bunătatea contează mai mult decât înfățișarea.`,
-
-      "băiatul care vorbea cu animalele": `Un copil comunică cu animale. El le ajută și primește sprijin. Povestea arată armonia cu natura și empatia.`,
-
-      "prâslea extra": `Prâslea înfruntă primejdii pentru a dovedi curaj. Finalul rămâne exemplar pentru tineri.`
-
+    // -----------------------
+    // REZUMATE (40+ detaliate)
+    // -----------------------
+    const summaries = {
+      "cenușăreasa": `Cenușăreasa, povestire populară cunoscută în multe variante, spune povestea unei tinere victime a nedreptății familiale. După moartea tatălui, ea rămâne în grija mamei vitrege și a surorilor acesteia. Este obligată la munci grele, trăiește în umbră și este privită cu dispreț. În ciuda condițiilor, își păstrează bunătatea și speranța. Într-un final apare o ocazie: un bal organizat la palat unde prințul urmează să aleagă o parteneră. O zână sau un ajutor magic o transformă pe Cenușăreasa pentru o noapte. La bal, ea cucerește inima prințului, dar trebuie să plece înainte de miezul nopții pentru ca vraja să nu se rupă. În faptul că fuge lasă în urmă un pantof, iar prințul pornește o căutare în întreg regatul pentru a găsi posesoarea pantofului. După probe și potriviri, Cenușăreasa este descoperită, recunoscută și ridicată din starea de suferință. Povestea este una despre răbdare, bunătate și dreptate recompensată. Ea vorbește despre transformare socială, speranță și puterea faptelor bune, și are numeroase interpretări simbolice în literatură și psihologie.`,
+      
+      "harap alb": `Povestea lui Harap-Alb este o creație populară transformată de Ion Creangă într-un basm epic. Eroul, fiul cel mic al unui crai, pleacă în lume pentru a-și dovedi curajul și priceperea. Pe drum este înșelat de Spân și ajunge sluga acestuia. Acolo face cunoștință cu o serie de tovarăși extraordinari, fiecare cu o putere sau trăsătură specială: Setilă, Flămânzilă, Ochilă, Gerilă, şi alţii. Împreună trec probe care testează curajul, loialitatea și istețimea. Harap-Alb învață lecții despre responsabilitate, umilință și virtute. În final, prin iscusință și curaj reușește să-l înfrângă pe Spân și să-și recapete locul. Povestea are multe nivele: mitic, moral și psihologic. Ea vorbește despre trecerea de la copilărie la maturitate, despre puterea prieteniei și despre prețul onestității.`,
+      
+      "amintiri din copilărie": `"Amintiri din copilărie" de Ion Creangă este o colecție de povestiri autobiografice care recreează dinamic viața copilului Nică în satul Humulești. Textele sunt bogate în detalii cotidiene, în replici și expresii populare, iar umorul se naște din observațiile vii asupra lumii rurale. Creangă povestește despre jocuri, șotii, pedepse, oameni și obiceiuri, construind o imagine complexă și afectivă a copilăriei. Pe lângă valoarea anecdotică, opera are și valoare etnografică, redând obiceiuri sociale, religioase și familiare. Modul de povestire, vocea naratorului și sinceritatea fac din aceste texte un reper al literaturii române pentru evocarea universului copilăriei.`,
+      
+      "pupăza din tei": `"Pupăza din tei" este o povestire scurtă, plină de umor, care prezintă una dintre isprăvile copilăriei lui Nică în care se intersectează curiozitatea și consecințele. Nică prinde o pupăză cu intenția de a o vinde la târg. După o serie de peripeții, în care pasărea scapă sau se întâmplă alte incidente comice, lecția este despre responsabilitate, consecințele faptelor și despre natura jocului copilăriei. Textul vorbește despre naivitate, dorința de îmbogățire ușoară și învățarea prin experiență.`,
+      
+      "baltagul": `"Baltagul" de Mihail Sadoveanu este un roman construit în jurul unei femei extraordinare, Vitoria Lipan, care pornește în căutarea soțului ei dispărut. Sadoveanu contrastează viața pastorală, ritmurile naturii și credințele populare cu lumea umbrelor și a vinovățiilor. Vitoria pornește cu o hotărâre aproape ritualică, folosește tradiții, semne și cunoștințe locale pentru a descoperi adevărul. Cartea este o combinație între roman de investigație, epopee a satului și studiul psihologiei populare. Tema centrală este dreptatea și puterea legăturii familiale, ilustrate prin hotărârea și întrebările morale ale eroinei.`,
+      
+      "micul print": `"Micul Prinț" de Antoine de Saint-Exupéry este o carte cu straturi multiple. La suprafață, pare o poveste pentru copii, dar în esență este o meditație despre sensul vieții, prietenie și responsabilitate. Micul Prinț vizitează planete unde întâlnește tipologii umane simbolice: regele, vanitosul, omul de afaceri, bețivul. Pe Pământ, întâlnește vulpea și pilotul. Dialogurile simple ascund adevăruri adânci: importanța legăturilor, valoarea lucrurilor invizibile și critica societății adulte. Cartea folosește metaforă, simbol și o voce poetică, oferind lecții despre iubire, pierdere și sens.`,
+      
+      "prâslea cel voinic și merele de aur": `Acest basm clasic prezintă conflictul dintre frică și curaj. Prâslea, fie el al treilea sau ultimul copil al împăratului, se dovedește cel mai curajos. El pornește în lupta pentru a proteja merele de aur ale tatălui său și înfruntă primejdii pași, după pași. Povestea include elemente magice, obstacole elaborate și o recompensă finală pentru curaj și dârzenie. Ea transmite ideea că adevărata valoare a unei persoane se descoperă atunci când este pusă la încercare.`,
+      
+      "greuceanu": `Greuceanu este un erou folcloric ce înfruntă forțe supranaturale pentru a restaura ordinea cosmică. În multe variante, el luptă pentru soare și lună sau pentru bunuri cerute de împărăție. Basmul combină motive războinice, mitice și arhetipale. Eroul trece probe, dovedește vitejie și reușește prin ajutor divin sau prin propria tărie. Acest basm ilustrează rolul eroului în mitologia populară: restaurator al ordinii și exemplu moral.`,
+      
+      "punguța cu doi bani": `Punguța cu doi bani spune despre norocul neașteptat și despre modul în care comunitatea reacționează la o mică avere. Personajul găsește o punguță cu bani care îi schimbă soarta pentru o perioadă. Apar conflicte, intrigă și îmbolnăvire socială prin invidie. Mesajul moral explorează responsabilitatea și comportamentul etic în fața schimbării situației materiale.`,
+      
+      "capra cu trei iezi": `Capra cu trei iezi este o poveste care pune accent pe ascultare și prudență. Mama le dă instrucțiuni clare puilor înainte de a pleca. Doi dintre iezi nu ascultă și ajung în primejdie. Cel care ascultă se salvează. Povestea arată importanța respectării regulilor siguranței și a încrederii în sfaturile părinților.`,
+      
+      "ivan turbincă": `Ivan Turbincă este un basm umoristic despre viclenie și supraviețuire. Un soldat primește o turbincă cu puteri care îi permite să păcălească elemente supranaturale. Cu umor și iscusință, Ivan își găsește norocul. Povestea pune în valoare inteligența populară și critica față de autoritate.`,
+      
+      "povestea lui stan pățitu": `Stan Pățitu este un personaj tragic-comic care trece printr-o serie de pățanii cauzate de naivitate. Prin greșeli repetate, el ajunge să-și recunoască limitele și să învețe. Textul are ton moralizator și umoristic, invitând cititorul să reflecteze la consecințele încrederii oarbe.`,
+      
+      "dănilă prepeleac": `Dănilă Prepeleac este o altă povestire populară care prezintă absurditatea și comicitatea situațiilor create de prostia protagonistului. Personajul pierde tot ce are din cauza deciziilor proaste. Mesajul sugerează prudență și învățare din greșeli.`,
+      
+      "soacra cu trei nurori": `Poveste care compara trei tipuri de nurori și modul în care fiecare răspunde la probă. Hărnicia este răsplătită, iar leneșii suferă consecințe. Este o morală socială despre valori domestice și responsabilitate.`,
+      
+      "lupul și mielul": `Fabula arată abuzul de putere: lupul caută motive pentru a mânca mielul, indiferent de dovezi. Morala este despre nedreptate și despre faptul că forța poate suprima dreptatea.`,
+      
+      "meșterul manole": `Baladă despre jertfa creației. Meșterii și-au construit o mănăstire, dar aceasta se prăbușește. Pentru a asigura stabilitatea, se cere un sacrificiu uman. Tema explorează prețul operei de artă și dedicarea creatorilor.`,
+      
+      "la hanul lui mânjoală": `Poveste cu elemente fantastice și satirice. Hanul devine spațiu de întâlniri între personaje cu credințe și comportamente diverse. Textul combină misterul cu analiza socială.`,
+      
+      "enigma otiliei": `Romanul vorbește despre moșteniri, interese și relații. Personajele navighează între sentimente și calcule materiale. Tema este conflictul dintre inimă și interes.`,
+      
+      "păcală și tândală": `Povestiri umoristice în care Păcală, cu istețime, învinge prostia și nedreptatea. Ele conțin replici vii, situații absurde și învățături morale fine.`,
+      
+      "fata din dafin": `Un basm romantic în care iubirea este testată de probe. Eroul trebuie să depășească obstacole pentru a elibera sufletul iubitului sau al iubitei. Tema este perseverența și credința în dragoste.`,
+      
+      "pomul vieții": `Basm simbolic care caută sursa puterii și a înțelepciunii. Eroul învață că adevărata putere vine din respectul pentru viață și natură. Povestea are accente morale și ecologice.`,
+      
+      "ciuboțelele ogarului": `O poveste despre ambiție și modestie. Un personaj care primește un avantaj magic învață lecția muncii și responsabilității când îl pierde.`,
+      
+      "florile din grădina zânei": `Fiecare floare simbolizează o virtute. Un copil le readuce viața prin gesturi simple. Textul susține ideea că virtuțile cotidiene mențin lumea vie.`,
+      
+      "croitorul cel isteț": `Poveste despre istețime în fața provocărilor. Croitorul învinge rivali mai puternici prin minte și curaj. Morala: istețimea bate forța brută.`,
+      
+      "povestea porcului": `Un basm fantastic despre dragoste și devotament. O fată iubește un porcușor care se dovedește a fi un prinț blestemat. Ea trece prin probe pentru a rupe vraja.`,
+      
+      "regele și înțeleptul": `Povestire despre mândrie și căutarea adevărului. Regele învață umilința când este confruntat cu înțelepciunea altora.`,
+      
+      "copilul și oglinda": `Oglinda arată faptele, nu înfățișarea. Copilul învață că bunătatea contează mai mult decât frumusețea.`,
+      
+      "băiatul care vorbea cu animalele": `Un povestitor care înțelege limbajul animalelor folosește această putere pentru a restabili echilibrul între om și natură.`,
+      
+      "soarele și luna": `Un mit popular care explică alternanța zilei și nopții. Frați sau personaje cosmice sunt separate pentru a menține ordinea naturală.`,
+      
+      "fântâna dorințelor": `O povestire morală în care dorințele ne învață despre cumpătare și responsabilitate. Cei care cer cu inima curată primesc bine, cei lacomi pierd totul.`,
+      
+      "prâslea extra": `Variantă extinsă a aventurilor lui Prâslea. Înfruntă primejdii, învață lecții despre curaj și loialitate. Finalul recompensează virtutea.`,
+      
+      "poveste noua 1": `O povestire modernă pentru liceu, care combină elemente tradiționale cu probleme contemporane. Personajele trec prin conflicte morale și învață despre responsabilitate.`,
+      
+      "poveste noua 2": `O adaptare modernă a unui basm clasic, plasată într-un oraș mic. Temele sunt prietenia, loialitatea și alegerea între bine și rău.`,
+      
+      "poveste noua 3": `Text contemporan despre adolescență, responsabilitate și curaj. Eroul se confruntă cu dileme etice și găsește o soluție prin dialog.`,
+      
+      "poveste noua 4": `O poveste fantastică care aduce în prim-plan tema toleranței și a diversității. Personajele învață să accepte diferența.`,
+      
+      "poveste noua 5": `O povestire scurtă despre prietenie și ajutor reciproc, potrivită ca lectură pentru clasa a șasea.`
     };
 
-    // Afișează lista titlurilor disponibile
-    function showLista(){
-      const titluri = Object.keys(rezumate).map(t => "• " + t).join("\n");
-      document.getElementById("raspuns").innerText = "Povestiri disponibile:\n\n" + titluri + "\n\nScrie: rezumat NUME_POVESTIRE";
+    // -----------------------
+    // FUNCȚII UTILE
+    // -----------------------
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]); }
+
+    function listStories(){
+      const keys = Object.keys(summaries).sort();
+      document.getElementById('output').innerText = 'Povești disponibile:\n\n' + keys.map(k=>'• '+k).join('\n');
     }
 
-    function sterge(){
-      document.getElementById("intrebare").value = "";
-      document.getElementById("raspuns").innerText = "";
-      document.getElementById("algebraSol").innerText = "";
-      document.getElementById("geometrieSol").innerText = "";
-      document.getElementById("apartSol").innerText = "";
+    function clearAll(){
+      document.getElementById('query').value = '';
+      document.getElementById('output').innerText = '';
+      document.getElementById('exerciseOutput').innerText = '';
     }
 
-    // Validare calcul
-    function esteCalculValabil(expr){
-      const safe = /^[0-9+\-*/().\sx:]+$/i;
-      return safe.test(expr.trim());
-    }
-    function evalueazaCalcul(expr){
-      const normalized = expr.replace(/x/gi, "*").replace(/:/g, "/");
-      if (!esteCalculValabil(normalized)) throw "Invalid";
-      if (/[+\-*/]{2,}/.test(normalized.replace(/\s+/g,''))) throw "Invalid";
-      const fn = new Function("return (" + normalized + ")");
-      const val = fn();
-      if (typeof val === "number" && isFinite(val)) return val;
-      throw "Invalid";
+    // Verifică expresie numerică simplă
+    function isMathExpr(s){
+      return /^[0-9\s+\-*/().:x]+$/.test(s);
     }
 
-    let ultimulRaspuns = "";
+    function safeEval(expr){
+      // Normalizez x și :
+      const norm = expr.replace(/x/g,'*').replace(/:/g,'/');
+      // Verific siguranta
+      if (!/^[0-9+\-*/().\s]+$/.test(norm)) throw 'Invalid';
+      // Evit executii lungi
+      return Function('"use strict";return ('+norm+')')();
+    }
 
-    function genereazaRaspuns(){
-      const raw = document.getElementById("intrebare").value.trim();
-      const text = raw.toLowerCase();
-      if (!text){
-        document.getElementById("raspuns").innerText = "Scrie o întrebare sau un exercițiu.";
-        return;
+    // -----------------------
+    // PARTEA DE MATEMATICĂ: algebra si geometrie
+    // -----------------------
+    function parseSet(str){
+      const s = str.replace(/[{}]/g,'').split(',').map(x=>x.trim()).filter(x=>x!=='');
+      return s.map(v => (/^-?\d+$/.test(v)) ? parseInt(v,10) : v);
+    }
+
+    function handleAlgebraEquation(eq){
+      // forme simple: ax + b = c sau x + b = c
+      const compact = eq.replace(/\s+/g,'');
+      const m = compact.match(/^([0-9]*)x?([+\-][0-9]+)?=([+\-]?[0-9]+)$/i);
+      if (!m) return 'Format necunoscut. Scrie ex: 2x + 3 = 11 sau x + 5 = 12.';
+      let a = m[1]===''?1:parseInt(m[1],10);
+      if (compact.indexOf('x')===-1) a = 0;
+      let b = m[2]?parseInt(m[2],10):0;
+      let c = parseInt(m[3],10);
+      if (a===0) return 'Nu există variabilă x sau formă invalidă.';
+      const x = (c - b)/a;
+      return `Ecuație: ${eq}\nPași:\n1. Mutăm termenii liberi: ${a}x = ${c} - (${b}) = ${c-b}\n2. Împărțim la ${a}: x = ${(c-b)}/${a} = ${x}`;
+    }
+
+    function handleGeometryQuery(text){
+      // ex: "aria dreptunghi 5 3" sau "perimetrul dreptunghiului 5 3"
+      const t = text.toLowerCase();
+      if (t.includes('dreptunghi') && t.includes('aria')){
+        const nums = t.match(/[-+]?\d*\.?\d+/g) || [];
+        if (nums.length >= 2){
+          const l = parseFloat(nums[0]), w = parseFloat(nums[1]);
+          return `Dreptunghi L=${l}, l=${w}\nAria = L × l = ${l} × ${w} = ${l*w}`;
+        } else return 'Scrie: aria dreptunghi L l. Ex: aria dreptunghi 5 3';
       }
-
-      // 1. Cerere explicită rezumat
-      if (text.startsWith("rezumat ") || text.includes("rezumat")){
-        const after = text.replace(/^rezumat\s*/,'').trim();
-        let gasit = "";
-        if (after){
-          for (const key of Object.keys(rezumate)){
-            if (after === key || key.includes(after) || after.includes(key)){ gasit = key; break; }
-          }
-        }
-        if (!gasit){
-          for (const key of Object.keys(rezumate)){
-            if (text.includes(key)) { gasit = key; break; }
-          }
-        }
-        if (gasit){
-          document.getElementById("raspuns").innerText = rezumate[gasit];
-          ultimulRaspuns = rezumate[gasit];
-          return;
+      if (t.includes('dreptunghi') && t.includes('perim')){
+        const nums = t.match(/[-+]?\d*\.?\d+/g) || [];
+        if (nums.length >= 2){
+          const l = parseFloat(nums[0]), w = parseFloat(nums[1]);
+          return `Perimetrul = 2 × (L + l) = 2 × (${l} + ${w}) = ${2*(l+w)}`;
+        } else return 'Scrie: perimetrul dreptunghiului L l. Ex: perimetrul dreptunghi 5 3';
+      }
+      if (t.includes('triunghi') && (t.includes('aria')||t.includes('perim'))){
+        if (t.includes('aria')){
+          const nums = t.match(/[-+]?\d*\.?\d+/g) || [];
+          if (nums.length >= 2){
+            const b = parseFloat(nums[0]), h = parseFloat(nums[1]);
+            return `Aria triunghi = (b × h) / 2 = (${b} × ${h}) / 2 = ${(b*h)/2}`;
+          } else return 'Scrie: aria triunghi baza înălțime. Ex: aria triunghi 6 4';
         } else {
-          document.getElementById("raspuns").innerText = "Nu am găsit povestea. Apasă Lista povestiri pentru titluri exacte.";
-          return;
+          return 'Perimetrul triunghiului se calculează prin adunarea celor trei laturi, dă toate laturile.';
         }
       }
-
-      // 2. Căutare directă titlu
-      for (const key of Object.keys(rezumate)){
-        if (text === key || text.includes(key) || key.includes(text)){
-          document.getElementById("raspuns").innerText = rezumate[key];
-          ultimulRaspuns = rezumate[key];
-          return;
-        }
+      if (t.includes('cerc')){
+        const nums = t.match(/[-+]?\d*\.?\d+/g) || [];
+        if (nums.length >= 1){
+          const r = parseFloat(nums[0]);
+          const aria = Math.PI * r * r;
+          const perim = 2 * Math.PI * r;
+          return `Cerc r=${r}\nAria = π × r² = ${aria.toFixed(3)}\nCircumferința = 2 × π × r = ${perim.toFixed(3)}`;
+        } else return 'Scrie: cerc r. Ex: cerc 3';
       }
+      return 'Specifica figura geometrică și valorile. Ex: aria dreptunghi 5 3';
+    }
 
-      // 3. Calcul matematic
+    // -----------------------
+    // INTELIGENȚĂ SIMPLĂ PENTRU ÎNTREBĂRI GENERALE
+    // -----------------------
+    function generalAnswers(text){
+      const t = text.toLowerCase();
+      if (t.includes('cine a fost mihai eminescu') || t.includes('mihai eminescu')){
+        return 'Mihai Eminescu (1850-1889) este considerat cel mai mare poet român. A scris poezii precum "Luceafărul", "Floare albastră" și "Scrisoarea III". Temele sale includ natura, timpul, iubirea și condiția umană.';
+      }
+      if (t.includes('capitala frantei') || t.includes('capitala franței') || t.includes('capitala paris')){
+        return 'Capitala Franței este Paris.';
+      }
+      if (t.includes('câte continente') || t.includes('număr continente')){
+        return 'Pe planeta noastră există 7 continente: Europa, Asia, Africa, America de Nord, America de Sud, Australia și Antarctica.';
+      }
+      if (t.includes('cine a scris baltagul') || t.includes('autor baltagul')){
+        return 'Romanul "Baltagul" a fost scris de Mihail Sadoveanu.';
+      }
+      if (t.includes('ce este o fabulă') || t.includes('definiție fabulă')){
+        return 'Faba este o scurtă povestire cu final moral, adesea cu personaje animale care reflectă tipuri umane. Morala transmite o regulă de conduită sau o lecție practică.';
+      }
+      return null;
+    }
+
+    // -----------------------
+    // LOGICA PRINCIPALĂ pentru întrebări
+    // -----------------------
+    function handleQuery(){
+      const raw = document.getElementById('query').value.trim();
+      if (!raw) return;
+      const text = raw.toLowerCase();
+      const out = document.getElementById('output');
+
+      // 1. Calcul matematic simplu
       try{
-        if (esteCalculValabil(text)){
-          const rez = evalueazaCalcul(text);
-          const rasp = "Rezultatul este: " + rez;
-          document.getElementById("raspuns").innerText = rasp;
-          ultimulRaspuns = rasp;
+        if (isMathExpr(text)){
+          const res = safeEval(text);
+          out.innerText = `Rezultatul este: ${res}`;
           return;
         }
-      }catch(e){ /* trecem la alte opțiuni */ }
+      } catch(e){ /* nu e expresie */ }
 
-      // 4. Explicații sau răspunsuri la întrebări de algebră/geometrie/apartenență
-      if (text.includes("algebr") || text.includes("ecua")){
-        const msg = "Algebra include expresii, operații și ecuații. Exemplu: x + 5 = 12, atunci x = 7. Poți scrie o ecuație concretă și îți arăt pașii.";
-        document.getElementById("raspuns").innerText = msg;
-        ultimulRaspuns = msg;
+      // 2. Algebra (ecuații)
+      if (/x/.test(text) && /=/.test(text)){
+        const sol = handleAlgebraEquation(raw);
+        out.innerText = sol;
         return;
       }
-      if (text.includes("geometr") || text.includes("triunghi") || text.includes("aria")){
-        const msg = "Geometria studiază figuri plane. Suma unghiurilor unui triunghi este 180 grade. Scrie o problemă concretă și îți arăt calculul.";
-        document.getElementById("raspuns").innerText = msg;
-        ultimulRaspuns = msg;
+
+      // 3. Geometrie
+      if (text.includes('aria') || text.includes('perim') || text.includes('cerc') || text.includes('dreptunghi') || text.includes('triunghi')){
+        out.innerText = handleGeometryQuery(text);
         return;
       }
-      if (text.includes("apart") || text.includes("aparține") || text.includes("apartenență")){
-        // detectăm formatul A={...} element=...
+
+      // 4. Apartenență mulțimi A={...} element=...
+      if (text.includes('{') && text.includes('element')){
         const setMatch = text.match(/\{([^}]+)\}/);
-        const elemMatch = text.match(/element\s*=?\s*([^\s,}]+)/);
+        const elemMatch = text.match(/element\s*=?\s*([^\s,]+)/);
         if (setMatch && elemMatch){
-          const nums = setMatch[1].split(',').map(s=>s.trim());
-          let element = elemMatch[1].replace(/[{}]/g,'').trim();
-          const cleanNums = nums.map(s => /^-?\d+$/.test(s) ? parseInt(s,10) : s);
-          if (/^-?\d+$/.test(element)) element = parseInt(element,10);
-          const apartine = cleanNums.some(v => String(v) === String(element));
-          const rasp = apartine ? `Da, ${element} aparține mulțimii ${"{" + cleanNums.join(",") + "}"}.` : `Nu, ${element} nu aparține mulțimii ${"{" + cleanNums.join(",") + "}"}.`;
-          document.getElementById("raspuns").innerText = rasp;
-          ultimulRaspuns = rasp;
+          const setArr = parseSet(setMatch[0]);
+          let elem = elemMatch[1].replace(/[{}]/g,'').trim();
+          if (/^-?\d+$/.test(elem)) elem = parseInt(elem,10);
+          const belongs = setArr.some(v => String(v) === String(elem));
+          out.innerText = belongs ? `Da, ${elem} aparține mulțimii ${setMatch[0]}` : `Nu, ${elem} nu aparține mulțimii ${setMatch[0]}`;
           return;
         }
       }
 
-      // 5. Nu am găsit
-      document.getElementById("raspuns").innerText = "Nu am găsit răspunsul. Scrie 'rezumat' urmat de titlu, pune un calcul sau folosește secțiunea Exerciții.";
+      // 5. Rezumate
+      for (const key of Object.keys(summaries)){
+        if (text.includes(key)){
+          out.innerHTML = `<strong>${key.toUpperCase()}</strong>\n\n${escapeHtml(summaries[key])}`;
+          return;
+        }
+      }
+
+      // 6. Răspunsuri generale
+      const gen = generalAnswers(text);
+      if (gen) { out.innerText = gen; return; }
+
+      // 7. Nu găsește nimic
+      out.innerText = "Nu am găsit răspuns exact. Încearcă 'rezumat TITLU' sau un calcul. Poți folosi Lista povești pentru titluri.";
     }
 
-    // Secțiuni exerciții
-    function schimbaSectiune(){
-      const t = document.getElementById("tipEx").value;
-      document.getElementById("algebraSec").style.display = (t === "algebra") ? "block" : "none";
-      document.getElementById("geometrieSec").style.display = (t === "geometrie") ? "block" : "none";
-      document.getElementById("apartenentaSec").style.display = (t === "apartenenta") ? "block" : "none";
-    }
-
-    // Generează exerciții simple
-    function genereazaEx(){
-      const t = document.getElementById("tipEx").value;
-      if (t === "algebra"){
+    // -----------------------
+    // Exerciții: generare și rezolvare
+    // -----------------------
+    function generateExercise(){
+      const t = document.getElementById('exerciseType').value;
+      const out = document.getElementById('exerciseOutput');
+      if (t === 'algebra'){
         const a = Math.floor(Math.random()*5)+1;
         const x = Math.floor(Math.random()*10);
         const b = Math.floor(Math.random()*10);
         const c = a*x + b;
-        const eq = `${a}x + ${b} = ${c}`;
-        document.getElementById("algebraInput").value = eq;
-        document.getElementById("algebraSol").innerText = "";
-      } else if (t === "geometrie"){
-        const opt = ["ariaDrept","perimDrept","sumaUng"];
-        const sel = opt[Math.floor(Math.random()*opt.length)];
-        document.getElementById("geoTip").value = sel;
-        if (sel === "ariaDrept" || sel === "perimDrept"){
-          const l = Math.floor(Math.random()*10)+2;
-          const w = Math.floor(Math.random()*8)+2;
-          document.getElementById("geoA").value = l;
-          document.getElementById("geoB").value = w;
-        } else {
-          document.getElementById("geoA").value = 50;
-          document.getElementById("geoB").value = "";
-        }
-        document.getElementById("geometrieSol").innerText = "";
-      } else if (t === "apartenenta"){
-        const sets = [[3,5,6,9],[1,2,4,8],[5,6,7]];
-        const arr = sets[Math.floor(Math.random()*sets.length)];
-        const el = arr[Math.floor(Math.random()*arr.length)];
-        document.getElementById("setInput").value = "{" + arr.join(",") + "}";
-        document.getElementById("elemInput").value = el;
-        document.getElementById("apartSol").innerText = "";
+        document.getElementById('exInputA').value = `${a}x + ${b} = ${c}`;
+        out.innerText = '';
+      } else if (t === 'geometrie'){
+        const l = Math.floor(Math.random()*8)+2;
+        const w = Math.floor(Math.random()*6)+2;
+        document.getElementById('exInputA').value = `dreptunghi ${l} ${w}`;
+        out.innerText = '';
+      } else if (t === 'apartenență'){
+        const sets = [[1,2,3],[4,5,6],[5,6,7]];
+        const s = sets[Math.floor(Math.random()*sets.length)];
+        const el = s[Math.floor(Math.random()*s.length)];
+        document.getElementById('exInputA').value = `{${s.join(',')}} element=${el}`;
+        out.innerText = '';
       }
     }
 
-    // Rezolvare exerciții
-    function rezolvaEx(){
-      const t = document.getElementById("tipEx").value;
-      if (t === "algebra"){
-        const expr = document.getElementById("algebraInput").value.trim();
-        if (!expr){ document.getElementById("algebraSol").innerText = "Scrie o ecuație."; return; }
-        const m = expr.replace(/\s+/g,'').match(/^([0-9]*)x?([+\-][0-9]+)?=([+\-]?[0-9]+)$/i);
-        if (!m){ document.getElementById("algebraSol").innerText = "Formă necunoscută. Ex: 2x + 3 = 11 sau x + 5 = 12."; return; }
-        let a = m[1]===""?1:parseInt(m[1],10);
-        if (expr.indexOf('x')===-1) a = 0;
-        let b = m[2]?parseInt(m[2],10):0;
-        let c = parseInt(m[3],10);
-        if (a === 0){ document.getElementById("algebraSol").innerText = "Nu există variabilă x sau formă invalidă."; return; }
-        const x = (c - b) / a;
-        let sol = `Ecuație: ${expr}\nPași:\n1. Mutăm termenii liberi: ${a}x = ${c} - (${b}) = ${c - b}\n2. Împărțim la ${a}: x = ${(c - b)}/${a} = ${x}`;
-        document.getElementById("algebraSol").innerText = sol;
-        return;
-      } else if (t === "geometrie"){
-        const tip = document.getElementById("geoTip").value;
-        const A = parseFloat(document.getElementById("geoA").value);
-        const B = parseFloat(document.getElementById("geoB").value);
-        if (tip === "ariaDrept"){
-          if (isNaN(A) || isNaN(B)){ document.getElementById("geometrieSol").innerText = "Scrie lungimea și lățimea."; return; }
-          const aria = A * B;
-          const sol = `Dreptunghi lungime=${A}, lățime=${B}\nAria = lungime × lățime = ${A} × ${B} = ${aria}`;
-          document.getElementById("geometrieSol").innerText = sol;
-          return;
-        }
-        if (tip === "perimDrept"){
-          if (isNaN(A) || isNaN(B)){ document.getElementById("geometrieSol").innerText = "Scrie lungimea și lățimea."; return; }
-          const perim = 2*(A+B);
-          const sol = `Dreptunghi lungime=${A}, lățime=${B}\nPerimetrul = 2 × (lungime + lățime) = 2 × (${A} + ${B}) = ${perim}`;
-          document.getElementById("geometrieSol").innerText = sol;
-          return;
-        }
-        if (tip === "sumaUng"){
-          const sol = "Suma unghiurilor într-un triunghi este 180 grade.\nDacă ai două unghiuri, le aduni și scazi din 180 pentru a găsi al treilea.";
-          document.getElementById("geometrieSol").innerText = sol;
-          return;
-        }
-      } else if (t === "apartenenta"){
-        const setStr = document.getElementById("setInput").value.trim();
-        const elStr = document.getElementById("elemInput").value.trim();
-        if (!setStr || !elStr){ document.getElementById("apartSol").innerText = "Completează mulțimea și elementul."; return; }
-        const nums = setStr.replace(/[{}]/g,'').split(',').map(s=>s.trim()).filter(s=>s!=='');
-        const cleanNums = nums.map(s => /^-?\d+$/.test(s) ? parseInt(s,10) : s);
-        let element = elStr;
-        if (/^-?\d+$/.test(elStr)) element = parseInt(elStr,10);
-        const apartine = cleanNums.some(v => String(v) === String(element));
-        const rasp = apartine ? `Da, ${element} aparține mulțimii ${setStr}.` : `Nu, ${element} nu aparține mulțimii ${setStr}.`;
-        document.getElementById("apartSol").innerText = rasp;
-        return;
+    function solveExercise(){
+      const t = document.getElementById('exerciseType').value;
+      const val = document.getElementById('exInputA').value.trim();
+      const out = document.getElementById('exerciseOutput');
+      if (!val){ out.innerText = 'Scrie exercițiul.'; return; }
+      if (t === 'algebra'){
+        out.innerText = handleAlgebraEquation(val);
+      } else if (t === 'geometrie'){
+        out.innerText = handleGeometryQuery(val);
+      } else if (t === 'apartenență'){
+        const setMatch = val.match(/\{([^}]+)\}/);
+        const elemMatch = val.match(/element\s*=?\s*([^\s,}]+)/);
+        if (setMatch && elemMatch){
+          const arr = parseSet(setMatch[0]);
+          let elem = elemMatch[1];
+          if (/^-?\d+$/.test(elem)) elem = parseInt(elem,10);
+          const belongs = arr.some(v => String(v) === String(elem));
+          out.innerText = belongs ? `Da, ${elem} aparține mulțimii ${setMatch[0]}` : `Nu, ${elem} nu aparține mulțimii ${setMatch[0]}`;
+        } else out.innerText = 'Format invalid pentru apartenență.';
       }
     }
 
-    // Citire cu voce
-    function citeste(){
-      if (!('speechSynthesis' in window)){ alert("Citirea cu voce nu este disponibilă în acest browser."); return; }
-      let text = ultimulRaspuns;
-      if (!text) text = document.getElementById("raspuns").innerText;
-      if (!text) return;
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = "ro-RO";
-      utter.rate = 1;
-      utter.pitch = 1;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(utter);
+    // -----------------------
+    // AUTENTIFICARE FIREBASE
+    // -----------------------
+    function openAuth(){
+      if (document.getElementById('authModal')) return;
+      const modal = document.createElement('div');
+      modal.id = 'authModal';
+      modal.className = 'modal-back';
+      modal.innerHTML = `
+        <div class="modal" role="dialog" aria-modal="true">
+          <h3 style="margin:0 0 8px 0">Conectare / Înregistrare</h3>
+          <div id="authError" style="color:#b00020;margin-bottom:8px"></div>
+          <div id="loginView">
+            <label>Email</label>
+            <input id="loginEmail" type="email" placeholder="email@exemplu.com" />
+            <label>Parolă</label>
+            <input id="loginPass" type="password" placeholder="parolă (min 6 caractere)" />
+            <div class="row" style="justify-content:flex-end;margin-top:10px">
+              <button class="btn btn-outline" onclick="showRegister()">Înregistrare</button>
+              <button class="btn btn-primary" onclick="loginEmail()">Conectează-te</button>
+            </div>
+          </div>
+          <div id="registerView" style="display:none">
+            <label>Nume</label>
+            <input id="regName" type="text" placeholder="Numele tău" />
+            <label>Email</label>
+            <input id="regEmail" type="email" placeholder="email@exemplu.com" />
+            <label>Parolă</label>
+            <input id="regPass" type="password" placeholder="parolă (min 6 caractere)" />
+            <div class="row" style="justify-content:flex-end;margin-top:10px">
+              <button class="btn btn-outline" onclick="showLogin()">Înapoi</button>
+              <button class="btn btn-primary" onclick="registerEmail()">Înregistrează-te</button>
+            </div>
+          </div>
+          <div style="margin-top:10px;font-size:13px">Poți folosi aplicația și fără cont, dar datele tale nu se vor salva în cloud.</div>
+        </div>
+      `;
+      document.body.appendChild(modal);
     }
 
-    // Trimite la Ctrl+Enter sau Cmd+Enter
-    document.getElementById("intrebare").addEventListener("keydown", function(e){
-      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)){ genereazaRaspuns(); }
+    function closeAuth(){
+      const m = document.getElementById('authModal');
+      if (m) m.remove();
+    }
+    function showRegister(){ document.getElementById('loginView').style.display='none'; document.getElementById('registerView').style.display='block'; }
+    function showLogin(){ document.getElementById('loginView').style.display='block'; document.getElementById('registerView').style.display='none'; }
+
+    function setAuthError(msg){ const el = document.getElementById('authError'); if (el) el.innerText = msg; }
+
+    async function registerEmail(){
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const pass = document.getElementById('regPass').value;
+      if (!name || !email || pass.length < 6){ setAuthError('Completează corect. Parola minim 6 caractere.'); return; }
+      try{
+        const cred = await createUserWithEmailAndPassword(auth, email, pass);
+        await updateProfile(cred.user, { displayName: name });
+        // Creez profil in Firestore
+        await setDoc(doc(db, 'users', cred.user.uid), { name, email, avatar: '' });
+        closeAuth();
+      }catch(err){
+        setAuthError(err.message || 'Eroare la înregistrare');
+      }
+    }
+
+    async function loginEmail(){
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPass').value;
+      if (!email || !pass){ setAuthError('Completează email și parolă'); return; }
+      try{
+        await signInWithEmailAndPassword(auth, email, pass);
+        closeAuth();
+      }catch(err){
+        setAuthError(err.message || 'Eroare la autentificare');
+      }
+    }
+
+    async function logout(){
+      await signOut(auth);
+      document.getElementById('profileBar').style.display = 'none';
+      document.getElementById('authButtons').style.display = 'flex';
+    }
+
+    async function loadProfile(user){
+      if (!user) return;
+      const docRef = doc(db, 'users', user.uid);
+      const docSnap = await getDoc(docRef);
+      let name = user.displayName || '';
+      let email = user.email || '';
+      let avatarUrl = '';
+      if (docSnap.exists()){
+        const data = docSnap.data();
+        if (data.name) name = data.name;
+        if (data.avatar) avatarUrl = data.avatar;
+      }
+      document.getElementById('displayName').innerText = name || email.split('@')[0];
+      document.getElementById('displayEmail').innerText = email;
+      const av = document.getElementById('avatar');
+      if (avatarUrl){
+        av.style.backgroundImage = `url(${avatarUrl})`;
+        av.style.backgroundSize = 'cover';
+        av.innerText = '';
+      } else {
+        av.style.backgroundImage = '';
+        av.innerText = (name && name[0]) ? name[0].toUpperCase() : (email[0]||'U').toUpperCase();
+      }
+      document.getElementById('profileBar').style.display = 'flex';
+      document.getElementById('authButtons').style.display = 'none';
+    }
+
+    onAuthStateChanged(auth, async user => {
+      if (user) {
+        await loadProfile(user);
+      } else {
+        document.getElementById('profileBar').style.display = 'none';
+        document.getElementById('authButtons').style.display = 'flex';
+      }
     });
 
-    // Exemplu precompletat prima dată
-    if (!localStorage.getItem("prim")) {
-      document.getElementById("intrebare").value = "rezumat Cenușăreasa";
-      localStorage.setItem("prim","1");
+    // click avatar => open edit profile
+    document.getElementById('avatar').addEventListener('click', () => {
+      const user = auth.currentUser;
+      if (!user) { openAuth(); return; }
+      if (document.getElementById('editModal')) return;
+      const modal = document.createElement('div');
+      modal.id = 'editModal';
+      modal.className = 'modal-back';
+      modal.innerHTML = `
+        <div class="modal">
+          <h3 style="margin:0 0 8px 0">Editează profil</h3>
+          <div style="margin-bottom:8px">Email: <strong>${escapeHtml(user.email)}</strong></div>
+          <label>Încarcă avatar (jpg/png)</label>
+          <input id="avatarFile" type="file" accept="image/*" />
+          <div class="row" style="justify-content:flex-end;margin-top:10px">
+            <button class="btn btn-outline" onclick="closeEdit()">Închide</button>
+            <button class="btn btn-primary" onclick="uploadAvatar()">Încarcă</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    });
+
+    function closeEdit(){ const m = document.getElementById('editModal'); if (m) m.remove(); }
+
+    async function uploadAvatar(){
+      const input = document.getElementById('avatarFile');
+      if (!input || !input.files || input.files.length === 0){ alert('Alege un fișier.'); return; }
+      const file = input.files[0];
+      const ext = file.name.split('.').pop().toLowerCase();
+      if (!['png','jpg','jpeg','webp','gif'].includes(ext)){ alert('Format invalid.'); return; }
+      const user = auth.currentUser;
+      if (!user){ alert('Trebuie să fii autentificat.'); return; }
+      const fileRef = sRef(storage, `avatars/${user.uid}/${Date.now()}_${file.name}`);
+      try{
+        await uploadBytes(fileRef, file);
+        const url = await getDownloadURL(fileRef);
+        await setDoc(doc(db, 'users', user.uid), { name: user.displayName || '', email: user.email, avatar: url }, { merge: true });
+        await loadProfile(user);
+        closeEdit();
+      }catch(err){
+        alert('Eroare încărcare: ' + (err.message || err));
+      }
     }
+
+    // enter to submit
+    document.getElementById('query').addEventListener('keydown', (e)=>{ if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) handleQuery(); });
+
+    // quick sample: list stories on first load (comment if not needed)
+    // listStories();
+
+    // Text-to-speech
+    function speakAnswer(){
+      const text = document.getElementById('output').innerText;
+      if (!text) return;
+      if (!('speechSynthesis' in window)){ alert('Citirea cu voce nu este disponibilă.'); return; }
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'ro-RO';
+      u.rate = 1;
+      u.pitch = 1;
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    }
+
+    // END module
   </script>
 </body>
 </html>

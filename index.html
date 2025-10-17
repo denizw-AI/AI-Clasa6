@@ -66,11 +66,27 @@
     // Import Firebase modular SDK (versiune compatibilă browser)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-    // === AICI LIPEȘTE TU CODUL FIREBASE din consola ta ===
-    // const firebaseConfig = { apiKey: "...", authDomain: "...", projectId: "...", storageBucket: "...", messagingSenderId: "...", appId: "...", measurementId: "..." };
-    // ======================================================
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAkQaOIVHSYzIsGB6xB8ekPvzGsfF_78Tg",
+  authDomain: "denizw111.firebaseapp.com",
+  projectId: "denizw111",
+  storageBucket: "denizw111.firebasestorage.app",
+  messagingSenderId: "1004600733897",
+  appId: "1:1004600733897:web:7e030dd1ec461c272f1d18",
+  measurementId: "G-CWWGTGV8RF"
+};
 
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
     // Verifică că ai pus config
     if (typeof firebaseConfig === 'undefined') {
       console.warn('firebaseConfig nu este setat. Adaugă blocul tău Firebase în login.html.');
